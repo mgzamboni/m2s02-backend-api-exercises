@@ -2,7 +2,7 @@ const express = require('express');
 
 const app = express()
 const fileSystem = require('fs')
-const {createFolder} = require('./utils')
+const { createFolder } = require('./utils')
 app.use(express.json())
 
 app.get('/', (req, res) => {
@@ -12,6 +12,7 @@ app.get('/', (req, res) => {
 app.post('/',  (req, res) => {
     const { folder, item } = req.body
     const { job } = req.query
+    console.log(folder)
     const existFolder = createFolder(folder)
     delete req.body.folder
 
@@ -22,7 +23,7 @@ app.post('/',  (req, res) => {
         console.log(result)
         return res.status(201).json({message: 'Caiu aqui'})
     }
-    //Nesta Linha de baixo, é criado o user.json e preenche o arquivo JSON de acordo com o que foi enviado no req.body
+    // //Nesta Linha de baixo, é criado o user.json e preenche o arquivo JSON de acordo com o que foi enviado no req.body
     fileSystem.writeFileSync('src/'+'user.json', JSON.stringify(req.body));
 
     return res.status(201).json({message: 'Hello world'})
