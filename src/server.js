@@ -31,6 +31,17 @@ app.post("/", (req, res) => {
   return res.status(201).json({ message: "Hello world" });
 });
 
+
+app.patch("/sortlist/:name", (req, res) => {
+    const { name } = req.params;
+    if(fileSystem.lstatSync("src/"+"user.json").isFile()) {
+        const result = JSON.parse(fileSystem.readFileSync("src/"+"user.json", "utf8"));
+        console.log(result);
+        return res.status(201).json(result.filter(person => {return person.name.toLowerCase() === name.toLowerCase()}));
+    }
+    return res.status(201).json({ message: "Hello world" });
+})
+
 app.get("/date/:month", (req, res) => {
   const { month } = req.params;
   const [validMonth, monthIndex] = validateMonth(month);
