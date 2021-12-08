@@ -8,6 +8,7 @@ const {
   datesInAMonth,
   filterData,
   swapData,
+  getDataArray
 } = require("./utils");
 app.use(express.json());
 
@@ -63,6 +64,21 @@ app.get("/date/:month", (req, res) => {
       : res.status(500).json({ message: "Ocorreu um erro durante a execução" });
   }
   return res.status(400).json({ message: "Mês inválido" });
+});
+
+app.post("/savedata", (req, res) => {
+  const data = req.body;
+  try{
+    if(fileSystem.existsSync("src/" + "data.json")) {
+      const result = getDataArray(data);
+      fileSystem.writeFileSync("src/" + "data.json", JSON.stringify(result));
+      return res.status(200).json(result);
+    }
+    fileSystem.writeFileSync("src/" + "data.json", JSON.stringify(data));
+    return res.status(201).json(data);
+  } catch (error){
+    return res.status(500).json({message: error})
+  }
 });
 
 app.listen(3333, () => console.log("Executando"));

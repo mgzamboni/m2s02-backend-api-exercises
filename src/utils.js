@@ -107,10 +107,24 @@ function datesInAMonth(monthIndex) {
   return dates;
 }
 
+/*
+  Função utilizada para concatenar um dado, passado por parâmetro, a um arquivo.
+  O conteúdo é concatenado na forma de array, ou seja, o novo dado será inserido ao final do array.
+  Caso o conteúdo do arquivo não esteja na forma de um array, todo o seu conteudo será passado para o primeiro indice de um array e o novo dado será adicionado ao próximo indice
+  caso o conteúdo do arquivo já esteja no formato de array, o novo dado será inserido utilizando o método push.
+
+*/
+function getDataArray(data) {
+  let result = JSON.parse(fileSystem.readFileSync("src/" + "data.json", "utf8"));
+  Array.isArray(result) ? result.push(data) : result = [result, data];
+  return result;
+}
+
 module.exports = {
   createFolder,
   validateMonth,
   datesInAMonth,
   filterData,
-  swapData
+  swapData,
+  getDataArray
 };
