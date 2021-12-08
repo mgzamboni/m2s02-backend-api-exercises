@@ -2,12 +2,14 @@ const express = require("express");
 
 const app = express();
 const fileSystem = require("fs");
-const { createFolder, validateMonth, datesInAMonth } = require("./utils");
+const {
+  createFolder,
+  validateMonth,
+  datesInAMonth,
+  filterData,
+  swapData,
+} = require("./utils");
 app.use(express.json());
-
-app.get("/", (req, res) => {
-  return res.status(200).json({ message: "Hello world" });
-});
 
 app.post("/", (req, res) => {
   const { folder, item } = req.body;
@@ -31,16 +33,24 @@ app.post("/", (req, res) => {
   return res.status(201).json({ message: "Hello world" });
 });
 
-
 app.patch("/sortlist/:name", (req, res) => {
-    const { name } = req.params;
-    if(fileSystem.lstatSync("src/"+"user.json").isFile()) {
-        const result = JSON.parse(fileSystem.readFileSync("src/"+"user.json", "utf8"));
-        console.log(result);
-        return res.status(201).json(result.filter(person => {return person.name.toLowerCase() === name.toLowerCase()}));
+  const { name } = req.params;
+  try {
+    if (fileSystem.lstatSync("src/" + "user.json").isFile()) {
+      const userList = JSON.parse(fileSystem.readFileSync("src/" + "user.json", "utf8"));
+      const filteredUser = filterData(userList, "name", name);
+      if (filteredUser !== null) {
+        const updatedUserList = swapData(userList, 0, filteredUser[1]);
+        fileSystem.writeFileSync("src/" + "user.json",JSON.stringify(updatedUserList));
+        return res.status(200).json(updatedUserList);
+      }
     }
-    return res.status(201).json({ message: "Hello world" });
-})
+    return res.status(400).json({ message: "O usuário informado não pertence a lista" });
+  } catch (error) {
+    return res.status(500).json({ message: error });
+  }
+  // return res.status(500).json({ message: "Não foi possível localizar o banco de dados" });
+});
 
 app.get("/date/:month", (req, res) => {
   const { month } = req.params;

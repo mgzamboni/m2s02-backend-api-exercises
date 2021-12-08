@@ -9,6 +9,41 @@ function createFolder(folderName) {
 }
 
 /*
+  Função utilizada para filtrar dados de um array de objetos.
+  A função obtém os dados de consulta do arquivo "user.json" (código pode ser refatorado para aceitar um argumento que indique o arquivo desejados.
+  A função recebe a propriedade que será verificada e o dado utilizado para validação
+  Caso o método filtro encontre os dados buscados, irá retornar um array contendo todos os elementos encontrados
+  e o índice do primeiro elemento encontrado no array original.
+  Caso a função não encontre o valor, irá retornar null.
+*/
+function filterData(array, prop, data) {
+  if(array.length <= 0) return null;
+  if(!(prop in array[0])) return null;
+  const filteredResult = array.filter(obj => {return obj[prop].toLowerCase() === data.toLowerCase()});
+  if(filteredResult.length > 0) {
+    const dataIndex = array.indexOf(filteredResult[0]);
+    return [filteredResult, dataIndex];
+  }
+  return null;
+}
+
+/*
+  Função utilizada para trocar as posições de dois elementos dentro de um array;
+  A função recebe o array que será modificado e o index dos respectivos elementos;
+  A função retorna um novo array com os elementos em suas novas posições
+*/
+function swapData(array, indexA, indexB) {
+  if(indexA === indexB) 
+    return array;
+  else {
+    let swapAux = array[indexA];
+    array[indexA] = array[indexB];
+    array[indexB] = swapAux;
+    return array;
+  }
+}
+
+/*
     Função para validar se o mês obtido via parâmetro é válido.
     O paramêtro "month" pode ser um número ou uma string que refencie o mês.
     Para strings são aceitos o nome completo ou a abreviação. A função não é case sensitive.
@@ -76,4 +111,6 @@ module.exports = {
   createFolder,
   validateMonth,
   datesInAMonth,
+  filterData,
+  swapData
 };
