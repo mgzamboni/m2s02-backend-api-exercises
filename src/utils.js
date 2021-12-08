@@ -19,7 +19,7 @@ function createFolder(folderName) {
 function filterData(array, prop, data) {
   if(array.length <= 0) return null;
   if(!(prop in array[0])) return null;
-  const filteredResult = array.filter(obj => {return obj[prop].toLowerCase() === data.toLowerCase()});
+  const filteredResult = array.filter(obj => {return obj[prop].toString().toLowerCase() === data.toString().toLowerCase()});
   if(filteredResult.length > 0) {
     const dataIndex = array.indexOf(filteredResult[0]);
     return [filteredResult, dataIndex];
@@ -120,11 +120,21 @@ function getDataArray(data) {
   return result;
 }
 
+function updateData(array, data, objIndex) {
+  console.log("print1", data);
+  console.log("print2", array[objIndex])
+  const obj = { data } = array[objIndex];
+  array[objIndex] = { ...data }
+  console.log(array[objIndex])
+  return null;
+}
+
 module.exports = {
   createFolder,
   validateMonth,
   datesInAMonth,
   filterData,
   swapData,
-  getDataArray
+  getDataArray,
+  updateData
 };

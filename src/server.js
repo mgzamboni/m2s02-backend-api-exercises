@@ -8,7 +8,8 @@ const {
   datesInAMonth,
   filterData,
   swapData,
-  getDataArray
+  getDataArray,
+  updateData
 } = require("./utils");
 app.use(express.json());
 
@@ -80,5 +81,25 @@ app.post("/savedata", (req, res) => {
     return res.status(500).json({message: error})
   }
 });
+
+app.put("/update/:id", (req, res) => {
+  const data = req.body;
+  const { id } = req.params;
+
+  try{
+    if (fileSystem.lstatSync("src/" + "user.json").isFile()) {
+      const userList = JSON.parse(fileSystem.readFileSync("src/" + "user.json", "utf8"));
+      const filteredUser = filterData(userList, "id", id);
+      if (filteredUser !== null) {
+        const updatedUserList = updateData(userList, data, filteredUser[1]);
+        // fileSystem.writeFileSync("src/" + "user.json",JSON.stringify(updatedUserList));
+        return res.status(200).json(updatedUserList);
+      }
+    }
+  } catch (error) {
+    return res.status(500).json({message: error});
+  }
+
+})
 
 app.listen(3333, () => console.log("Executando"));
