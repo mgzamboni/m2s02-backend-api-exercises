@@ -93,7 +93,6 @@ app.put("/update/:id", (req, res) => {
       if (filteredUser !== null) {
         const updatedUserList = updateData(userList, data, filteredUser[1]);
         console.log(updatedUserList)
-        // // fileSystem.writeFileSync("src/" + "user.json",JSON.stringify(updatedUserList));
         if( updatedUserList !== null) { 
           fileSystem.writeFileSync("src/" + "user.json",JSON.stringify(updatedUserList[0]))
           return res.status(200).json({message: `Os campos ${updatedUserList[1].join(', ')} foram atualizado`})  
@@ -102,12 +101,11 @@ app.put("/update/:id", (req, res) => {
           return res.status(200).json({message: "Nenhum campo foi alterado"});
         }
       }
-
     }
   } catch (error) {
     return res.status(500).json({message: error});
   }
-
+  return res.status(400).json({message: "Não foi possível completar a requisição"})
 })
 
 app.listen(3333, () => console.log("Executando"));
