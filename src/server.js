@@ -101,11 +101,11 @@ app.put("/update/:id", (req, res) => {
           return res.status(200).json({message: "Nenhum campo foi alterado"});
         }
       }
+      return res.status(400).json({message: "ID informado é inválido"})
     }
   } catch (error) {
     return res.status(500).json({message: error});
   }
-  return res.status(400).json({message: "Não foi possível completar a requisição"})
 })
 
 app.listen(3333, () => console.log("Executando"));
