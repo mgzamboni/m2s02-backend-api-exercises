@@ -121,11 +121,19 @@ function getDataArray(data) {
 }
 
 function updateData(array, data, objIndex) {
-  console.log("print1", data);
-  console.log("print2", array[objIndex])
-  const obj = { data } = array[objIndex];
-  array[objIndex] = { ...data }
-  console.log(array[objIndex])
+  // console.log("print1", Object.keys(data));
+  // console.log(data[Object.keys(data)[0]]);
+  // console.log("print2", array[objIndex]);
+  const objToBeUpdated = array[objIndex];
+  // console.log(objToBeUpdated);
+  const validKeys = Object.keys(objToBeUpdated).filter(item => Object.keys(data).includes(item))
+  const keysToUpdate = validKeys.filter((key) => objToBeUpdated[key] !== data[key]);
+  // console.log(keysToUpdate);
+  if(keysToUpdate.length > 0) {
+    keysToUpdate.map( key => objToBeUpdated[key] = data[key]);
+    array[objIndex] = objToBeUpdated;
+    return [array, keysToUpdate];
+  }
   return null;
 }
 
