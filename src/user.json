@@ -1,51 +1,65 @@
 [
   {
-    "id": 4,
+    "id": 1,
     "name": "Matheus",
     "age": 26,
     "job": "Software Developer",
-    "state": "Santa Catarina"
-  },
-  {
-    "id": 3,
-    "name": "Aderbal",
-    "age": 18,
-    "job": "Intern",
-    "state": "São Paulo"
-  },
-  {
-    "id": 1,
-    "name": "Pedro",
-    "age": 25,
-    "job": "Developer",
-    "state": "Santa Catarina"
-  },
-  {
-    "id": 6,
-    "name": "Vitoria",
-    "age": 35,
-    "job": "Tech Lead",
-    "state": "Rio Grande do Sul"
-  },
-  {
-    "id": 5,
-    "name": "Luisa",
-    "age": 31,
-    "job": "UX Designer",
     "state": "Santa Catarina"
   },
   {
     "id": 2,
-    "name": "Matheus",
-    "age": 26,
-    "job": "Software Developer",
+    "name": "José",
+    "age": 18,
+    "job": "Personal Trainer",
     "state": "Santa Catarina"
   },
   {
-    "id": 52,
-    "name": "Matheus",
-    "age": 26,
-    "job": "Software Developer",
+    "id": 3,
+    "name": "Luana",
+    "age": 32,
+    "job": "UX Designer",
     "state": "Santa Catarina"
+  },
+  {
+    "id": 4,
+    "name": "Lucas",
+    "age": 17,
+    "job": "Intern",
+    "state": "Rio de Janeiro"
+  },
+  {
+    "id": 5,
+    "name": "Amadeu",
+    "age": 52,
+    "job": "Manager",
+    "state": "Rio de Janeiro"
+  },
+  {
+    "id": 6,
+    "name": "Franscisca",
+    "age": 25,
+    "job": "Modelo",
+    "state": "Rio de Janeiro"
+  },
+  {
+    "id": 7,
+    "name": "Amanda",
+    "age": 27,
+    "job": "Sales Analyst",
+    "state": "Paraná"
+  },
+  {
+    "id": 8,
+    "name": "Marcos",
+    "age": 15,
+    "job": "Student",
+    "state": "Paraná"
+  },
+  {
+    "id": 9,
+    "name": "Maria",
+    "age": 35,
+    "job": "SCRUM Master",
+    "state": "Paraná"
   }
 ]

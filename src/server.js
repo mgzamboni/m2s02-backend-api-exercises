@@ -9,7 +9,8 @@ const {
   filterData,
   swapData,
   getDataArray,
-  updateData
+  updateData,
+  getOperator
 } = require("./utils");
 app.use(express.json());
 
@@ -106,6 +107,22 @@ app.put("/update/:id", (req, res) => {
   } catch (error) {
     return res.status(500).json({message: error});
   }
+})
+
+app.get("/userlist", (req, res) => {
+  const query = req.query;
+  let filteredUserList = JSON.parse(fileSystem.readFileSync("src/" + "user.json", "utf8"));
+    for(i = 0; i < Object.keys(query).length; i++) {
+      if(Object.keys(query)[i] === "ageMin") {
+        filteredUserList = filterData(filteredUserList, "age", query[Object.keys(query)[i]], ">=")[0];
+      } else if(Object.keys(query)[i] === "ageMax") {
+        filteredUserList = filterData(filteredUserList, "age", query[Object.keys(query)[i]], "<=")[0];
+      } else{
+        filteredUserList = filterData(filteredUserList, Object.keys(query)[i], query[Object.keys(query)[i]])[0];
+      }
+     console.log(`Scan ${i}: `, filteredUserList);
+    }
+  return res.status(200).json(filteredUserList);
 })
 
 app.listen(3333, () => console.log("Executando"));

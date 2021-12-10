@@ -14,17 +14,31 @@ function createFolder(folderName) {
   A função recebe a propriedade que será verificada e o dado utilizado para validação
   Caso o método filtro encontre os dados buscados, irá retornar um array contendo todos os elementos encontrados
   e o índice do primeiro elemento encontrado no array original.
-  Caso a função não encontre o valor, irá retornar null.
+  Caso a função não encontre o valor, a prop seja inválida, ou a prop não faça parte do objeto, irá retornar um array vazio e o código -1.
 */
-function filterData(array, prop, data) {
-  if(array.length <= 0) return null;
-  if(!(prop in array[0])) return null;
-  const filteredResult = array.filter(obj => {return obj[prop].toString().toLowerCase() === data.toString().toLowerCase()});
+
+function getOperator(operator, a, b) {
+  const operators = {
+    "===": (a, b) => {return a === b},
+    "!==": (a, b) => {return a !== b},
+    "<": (a, b) => {return a < b},
+    ">": (a, b) => {return a > b},
+    "<=": (a, b) => {return a <= b},
+    ">=": (a, b) => {return a >= b},
+  }
+  return operators[operator](a, b);
+}
+
+function filterData(array, prop, data, operator="===") {
+  if(!prop) return [[], -1];
+  if(array.length <= 0) return [[], -1];
+  if(!(prop in array[0])) return [[], -1];
+  const filteredResult = array.filter(obj => {return getOperator(operator, obj[prop].toString().toLowerCase(), data.toString().toLowerCase())});
   if(filteredResult.length > 0) {
     const dataIndex = array.indexOf(filteredResult[0]);
     return [filteredResult, dataIndex];
   }
-  return null;
+  return [[], -1];
 }
 
 /*
@@ -140,5 +154,6 @@ module.exports = {
   filterData,
   swapData,
   getDataArray,
-  updateData
+  updateData,
+  getOperator
 };
