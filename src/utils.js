@@ -135,16 +135,27 @@ function getDataArray(data) {
 }
 
 function updateData(array, data, objIndex) {
-  console.log(array[objIndex])
-  // const objToBeUpdated = array[objIndex];
-  // const validKeys = Object.keys(objToBeUpdated).filter(item => Object.keys(data).includes(item))
-  // const keysToUpdate = validKeys.filter((key) => objToBeUpdated[key] !== data[key]);
-  // if(keysToUpdate.length > 0) {
-  //   keysToUpdate.map( key => objToBeUpdated[key] = data[key]);
-  //   array[objIndex] = objToBeUpdated;
-  //   return [array, keysToUpdate];
-  // }
+  const objToBeUpdated = array[objIndex];
+  const validKeys = Object.keys(objToBeUpdated).filter(item => Object.keys(data).includes(item))
+  const keysToUpdate = validKeys.filter((key) => objToBeUpdated[key] !== data[key]);
+  if(keysToUpdate.length > 0) {
+    keysToUpdate.map( key => objToBeUpdated[key] = data[key]);
+    array[objIndex] = objToBeUpdated;
+    return [array, keysToUpdate];
+  }
   return null;
+}
+
+function createItemList(num) {
+  if (num <= 0) {
+    return [];
+  } else {
+      let aux_arr = [];
+      for(i = 1; i <= num; i++) {
+        aux_arr.push({"item": i})
+      }
+      return aux_arr;
+    }
 }
 
 module.exports = {
@@ -155,5 +166,5 @@ module.exports = {
   swapData,
   getDataArray,
   updateData,
-  getOperator
+  createItemList
 };

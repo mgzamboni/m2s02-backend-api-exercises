@@ -10,7 +10,7 @@ const {
   swapData,
   getDataArray,
   updateData,
-  getOperator
+  createItemList
 } = require("./utils");
 app.use(express.json());
 
@@ -93,7 +93,6 @@ app.put("/update/:id", (req, res) => {
       const filteredUser = filterData(userList, "id", id);
       if (filteredUser !== null) {
         const updatedUserList = updateData(userList, data, filteredUser[1]);
-        console.log(updatedUserList)
         if( updatedUserList !== null) { 
           fileSystem.writeFileSync("src/" + "user.json",JSON.stringify(updatedUserList[0]))
           return res.status(200).json({message: `Os campos ${updatedUserList[1].join(', ')} foram atualizado`})  
@@ -123,6 +122,22 @@ app.get("/userlist", (req, res) => {
      console.log(`Scan ${i}: `, filteredUserList);
     }
   return res.status(200).json(filteredUserList);
+})
+
+app.post("/createlist", (req, res) => {
+  const { number } = req.body;
+  try {
+    if (!Number.isInteger(number)) {
+      return res.status(400).json({message: "Valor inválido, deve ser um número"});
+    } else {
+      itemlist = createItemList(number);
+      console.log(itemlist);
+      fileSystem.writeFileSync("src/" + "items.json",JSON.stringify(itemlist));
+      return res.status(200).json(itemlist);
+    }
+  } catch (error) {
+    return res.status(500).json({message: error});
+  }
 })
 
 app.listen(3333, () => console.log("Executando"));
