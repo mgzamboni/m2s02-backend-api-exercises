@@ -140,4 +140,18 @@ app.post("/createlist", (req, res) => {
   }
 })
 
+app.delete("/userlist/:id", (req, res) => {
+  const { id } = req.params;
+  const userList = JSON.parse(fileSystem.readFileSync("src/" + "user.json", "utf8"));
+  const filteredUser = filterData(userList, "id", id);
+  if(filteredUser[1] !== -1) {
+    userList.splice(filteredUser[1], 1)
+    fileSystem.writeFileSync("src/" + "user.json",JSON.stringify(userList))
+    return res.status(200).json(userList);
+  } else {
+    return res.status(400).json({message: "ID informado não foi encontrado"});
+  }
+
+})
+
 app.listen(3333, () => console.log("Executando"));
