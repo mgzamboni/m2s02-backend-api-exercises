@@ -135,16 +135,69 @@ function getDataArray(data) {
 }
 
 function updateData(array, data, objIndex) {
-  console.log(array[objIndex])
-  // const objToBeUpdated = array[objIndex];
-  // const validKeys = Object.keys(objToBeUpdated).filter(item => Object.keys(data).includes(item))
-  // const keysToUpdate = validKeys.filter((key) => objToBeUpdated[key] !== data[key]);
-  // if(keysToUpdate.length > 0) {
-  //   keysToUpdate.map( key => objToBeUpdated[key] = data[key]);
-  //   array[objIndex] = objToBeUpdated;
-  //   return [array, keysToUpdate];
-  // }
+  const objToBeUpdated = array[objIndex];
+  const validKeys = Object.keys(objToBeUpdated).filter(item => Object.keys(data).includes(item))
+  const keysToUpdate = validKeys.filter((key) => objToBeUpdated[key] !== data[key]);
+  if(keysToUpdate.length > 0) {
+    keysToUpdate.map( key => objToBeUpdated[key] = data[key]);
+    array[objIndex] = objToBeUpdated;
+    return [array, keysToUpdate];
+  }
   return null;
+}
+
+/*
+  Cria um array de objetos contendo uma propriedade "item".
+  O número de objetos é definido pela entrada "num" e os valores de cada item serão de acordo a iteração do laço for. 
+*/
+function createItemList(num) {
+  if (num <= 0) {
+    return [];
+  } else {
+      let aux_arr = [];
+      for(i = 1; i <= num; i++) {
+        aux_arr.push({"item": i})
+      }
+      return aux_arr;
+    }
+}
+
+ /*
+  função recursiva utilizada para calcular fatorial
+ */
+function calcFatorial(num) {
+  if(num === 0) {
+    return 1;
+  } else {
+    return num*calcFatorial(num-1)
+  }
+}
+
+/* 
+  Verifica se algum elemento de um array é um número, se for retorna true, caso contrário retorna false.
+  O número pode estar no formato de uma string que continuará retornando true.
+*/
+function stringHasNumber(array) {
+  for (i = 0; i < array.length; i++) {
+    if(!isNaN(parseInt(array[i]))) {
+      return true;
+    }
+  }
+  return false;
+};
+
+/*
+  Pega os elementos de um array, de preferência uma string que tenha transformado em um array e alterna os valores do array original entre maiusculas e minusculas.
+*/
+function invertLetterCase(array) {
+  for (i = 0; i < array.length; i++) {
+    if(array[i] === array[i].toUpperCase()) {
+      array[i] = array[i].toLowerCase();
+    } else {
+      array[i] = array[i].toUpperCase();
+    }
+  }
+  return array;
 }
 
 module.exports = {
@@ -155,5 +208,8 @@ module.exports = {
   swapData,
   getDataArray,
   updateData,
-  getOperator
+  createItemList,
+  calcFatorial,
+  stringHasNumber,
+  invertLetterCase
 };
