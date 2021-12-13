@@ -157,6 +157,14 @@ function createItemList(num) {
       return aux_arr;
     }
 }
+ 
+function calcFatorial(num) {
+  if(num === 0) {
+    return 1;
+  } else {
+    return num*calcFatorial(num-1)
+  }
+}
 
 module.exports = {
   createFolder,
@@ -166,5 +174,6 @@ module.exports = {
   swapData,
   getDataArray,
   updateData,
-  createItemList
+  createItemList,
+  calcFatorial
 };

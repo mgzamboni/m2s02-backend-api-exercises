@@ -10,7 +10,8 @@ const {
   swapData,
   getDataArray,
   updateData,
-  createItemList
+  createItemList,
+  calcFatorial
 } = require("./utils");
 app.use(express.json());
 
@@ -152,6 +153,16 @@ app.delete("/userlist/:id", (req, res) => {
     return res.status(400).json({message: "ID informado não foi encontrado"});
   }
 
+})
+
+
+app.get("/fatorial", (req, res) => {
+  const { value } = req.query;
+  if(isNaN(parseInt(value)) || parseInt(value) < 0) {
+    return res.status(400).json({message: "Valor inválido, digite um número inteiro maior ou igual a 0"})
+  } else {
+    return res.status(200).json({result: calcFatorial(parseInt(value))})
+  }
 })
 
 app.listen(3333, () => console.log("Executando"));
