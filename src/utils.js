@@ -146,6 +146,10 @@ function updateData(array, data, objIndex) {
   return null;
 }
 
+/*
+  Cria um array de objetos contendo uma propriedade "item".
+  O número de objetos é definido pela entrada "num" e os valores de cada item serão de acordo a iteração do laço for. 
+*/
 function createItemList(num) {
   if (num <= 0) {
     return [];
@@ -157,13 +161,43 @@ function createItemList(num) {
       return aux_arr;
     }
 }
- 
+
+ /*
+  função recursiva utilizada para calcular fatorial
+ */
 function calcFatorial(num) {
   if(num === 0) {
     return 1;
   } else {
     return num*calcFatorial(num-1)
   }
+}
+
+/* 
+  Verifica se algum elemento de um array é um número, se for retorna true, caso contrário retorna false.
+  O número pode estar no formato de uma string que continuará retornando true.
+*/
+function stringHasNumber(array) {
+  for (i = 0; i < array.length; i++) {
+    if(!isNaN(parseInt(array[i]))) {
+      return true;
+    }
+  }
+  return false;
+};
+
+/*
+  Pega os elementos de um array, de preferência uma string que tenha transformado em um array e alterna os valores do array original entre maiusculas e minusculas.
+*/
+function invertLetterCase(array) {
+  for (i = 0; i < array.length; i++) {
+    if(array[i] === array[i].toUpperCase()) {
+      array[i] = array[i].toLowerCase();
+    } else {
+      array[i] = array[i].toUpperCase();
+    }
+  }
+  return array;
 }
 
 module.exports = {
@@ -175,5 +209,7 @@ module.exports = {
   getDataArray,
   updateData,
   createItemList,
-  calcFatorial
+  calcFatorial,
+  stringHasNumber,
+  invertLetterCase
 };

@@ -11,7 +11,9 @@ const {
   getDataArray,
   updateData,
   createItemList,
-  calcFatorial
+  calcFatorial,
+  stringHasNumber,
+  invertLetterCase
 } = require("./utils");
 app.use(express.json());
 
@@ -176,6 +178,21 @@ app.get("/userlist/:id", (req, res) => {
     return res.status(200).json({name: filteredUser[0][0]["name"]})
   } else {
     return res.status(200).json({message: "Usuário não encontrado"});
+  }
+})
+
+app.post("/convertstring" , (req, res) => {
+  const { item } = req.body;
+  
+  if(typeof item !== "string") {
+    return res.status(400).json({message: "O valor informado deve ser uma string"});
+  } else {
+    const itemArr = item.split('');
+    if(stringHasNumber(itemArr)) {
+      res.status(400).json({message: "A string não deve conter valores numéricos"});
+    } else {
+      return res.status(200).json({item: itemArr.join('')});
+    }
   }
 })
 
