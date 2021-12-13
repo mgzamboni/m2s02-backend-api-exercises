@@ -165,4 +165,18 @@ app.get("/fatorial", (req, res) => {
   }
 })
 
+app.get("/userlist/:id", (req, res) => {
+  const { id } = req.params;
+  const userList = JSON.parse(fileSystem.readFileSync("src/" + "user.json", "utf8"));
+  const filteredUser = filterData(userList, "id", id);
+  if(isNaN(parseInt(id))) {
+    return res.status(400).json({message: "ID inválido. informe um número inteiro maior que zero"});
+  }
+  if (filteredUser[1] !== -1) {
+    return res.status(200).json({name: filteredUser[0][0]["name"]})
+  } else {
+    return res.status(200).json({message: "Usuário não encontrado"});
+  }
+})
+
 app.listen(3333, () => console.log("Executando"));
